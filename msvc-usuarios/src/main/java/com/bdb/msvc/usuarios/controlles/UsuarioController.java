@@ -1,5 +1,6 @@
 package com.bdb.msvc.usuarios.controlles;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,12 @@ public class UsuarioController {
 		if (result.hasErrors()) {
 			return validacion(result);
 		}
+
+		if (!usuario.getEmail().isEmpty() && service.existePorEmail(usuario.getEmail())) {
+			return ResponseEntity.badRequest().body(
+					Collections.singletonMap("Mensaje", "ya existe un usuario con el email " + usuario.getEmail()));
+		}
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(usuario));
 	}
 
@@ -55,7 +62,15 @@ public class UsuarioController {
 		Optional<Usuario> o = service.porId(id);
 
 		if (o.isPresent()) {
+
 			Usuario usuarioDb = o.get();
+
+			if (!usuario.getEmail().isEmpty() && !usuario.getEmail().equalsIgnoreCase(usuarioDb.getEmail())
+					&& service.porEmail(usuario.getEmail()).isPresent()) {
+				return ResponseEntity.badRequest().body(Collections.singletonMap("Mensaje",
+						"ya esta registrado el email " + usuario.getEmail() + "en otro usuario"));
+			}
+
 			usuarioDb.setNombre(usuario.getNombre());
 			usuarioDb.setEmail(usuario.getEmail());
 			usuarioDb.setPassword(usuario.getPassword());
