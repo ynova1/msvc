@@ -1,4 +1,4 @@
-package com.bdb.msvc.cursos.models.entity;
+package com.bdb.msvc.cursos.models.models.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,12 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "cursos_usuarios")
+@Table(name = "curso_usuarios")
 public class CursoUsuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
+	private Long id;
 
 	@Column(name = "usuario_id", unique = true)
 	private Long usuarioId;
@@ -36,6 +36,7 @@ public class CursoUsuario {
 
 	@Override
 	public boolean equals(Object obj) {
+
 		if (this == obj) {
 			return true;
 		}
@@ -46,5 +47,7 @@ public class CursoUsuario {
 		CursoUsuario o = (CursoUsuario) obj;
 
 		return this.usuarioId != null && this.usuarioId.equals(o.usuarioId);
+
 	}
+
 }

@@ -1,15 +1,19 @@
-package com.bdb.msvc.cursos.models.entity;
+package com.bdb.msvc.cursos.models.models.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.bdb.msvc.cursos.models.models.Usuario;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -24,10 +28,15 @@ public class Curso {
 	private String nombre;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "curso_id")
 	private List<CursoUsuario> cursoUsuarios;
+
+	@Transient
+	private List<Usuario> usuarios;
 
 	public Curso() {
 		cursoUsuarios = new ArrayList<>();
+		usuarios = new ArrayList<>();
 	}
 
 	public Long getId() {
@@ -46,8 +55,11 @@ public class Curso {
 		this.nombre = nombre;
 	}
 
-	public void addCursoUsuario(CursoUsuario cursoUsuario) {
+	public List<CursoUsuario> getCursoUsuarios() {
+		return cursoUsuarios;
+	}
 
+	public void addCursoUsuario(CursoUsuario cursoUsuario) {
 		cursoUsuarios.add(cursoUsuario);
 	}
 
@@ -55,12 +67,16 @@ public class Curso {
 		cursoUsuarios.remove(cursoUsuario);
 	}
 
-	public List<CursoUsuario> getCursoUsaurio() {
-		return cursoUsuarios;
+	public void setCursoUsuarios(List<CursoUsuario> cursoUsuarios) {
+		this.cursoUsuarios = cursoUsuarios;
 	}
 
-	public void setCursoUsaurio(List<CursoUsuario> cursoUsaurio) {
-		this.cursoUsuarios = cursoUsaurio;
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 }

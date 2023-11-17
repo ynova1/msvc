@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bdb.msvc.cursos.models.entity.Curso;
+import com.bdb.msvc.cursos.models.models.entity.Curso;
 import com.bdb.msvc.cursos.services.CursosService;
 
 @RestController

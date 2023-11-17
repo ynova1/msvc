@@ -3,7 +3,7 @@ package com.bdb.msvc.cursos.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.bdb.msvc.cursos.models.entity.Curso;
+import com.bdb.msvc.cursos.models.models.entity.Curso;
 
 public interface CursosService {
 	
