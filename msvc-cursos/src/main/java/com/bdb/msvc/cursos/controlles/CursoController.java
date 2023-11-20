@@ -1,5 +1,6 @@
 package com.bdb.msvc.cursos.controlles;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bdb.msvc.cursos.models.models.entity.Curso;
 import com.bdb.msvc.cursos.services.CursosService;
+
+import jakarta.validation.Valid;
 
 @RestController
 public class CursoController {
@@ -44,16 +47,20 @@ public class CursoController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody Curso curso, BindingResult result) {
+	public ResponseEntity<?> guardar(@Valid @RequestBody Curso curso, BindingResult result) {
 		if (result.hasErrors()) {
 			return validacion(result);
+		}
+		if (!curso.getNombre().isEmpty() && service.existeporNombre(curso.getNombre())) {
+			return ResponseEntity.badRequest().body(Collections.singletonMap("Mensaje",
+					"El curso con nombre " + curso.getNombre() + " ya existe en el sistema"));
 		}
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(curso));
 
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> editar(@RequestBody Curso curso, BindingResult result, @PathVariable Long id) {
+	public ResponseEntity<?> editar(@Valid @RequestBody Curso curso, BindingResult result, @PathVariable Long id) {
 
 		if (result.hasErrors()) {
 			return validacion(result);

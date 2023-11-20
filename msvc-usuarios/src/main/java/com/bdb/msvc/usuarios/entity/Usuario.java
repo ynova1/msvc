@@ -29,6 +29,10 @@ public class Usuario {
 	@NotBlank
 	private String password;
 
+	private String passwordHash;
+
+	private String passwordSalt;
+
 	public Long getId() {
 		return id;
 	}
@@ -60,4 +64,21 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
+	public String getPasswordSalt() {
+		return passwordSalt;
+	}
+
+	public void setPasswordSalt(String passwordSalt) {
+		this.passwordSalt = passwordSalt;
+	}
+
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import com.bdb.msvc.cursos.models.models.Usuario;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class Curso {
 	private Long id;
 
 	@NotBlank()
+	@Column(unique = true)
 	private String nombre;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -59,16 +61,16 @@ public class Curso {
 		return cursoUsuarios;
 	}
 
+	public void setCursoUsuarios(List<CursoUsuario> cursoUsuarios) {
+		this.cursoUsuarios = cursoUsuarios;
+	}
+
 	public void addCursoUsuario(CursoUsuario cursoUsuario) {
 		cursoUsuarios.add(cursoUsuario);
 	}
 
 	public void removeCursoUsuario(CursoUsuario cursoUsuario) {
 		cursoUsuarios.remove(cursoUsuario);
-	}
-
-	public void setCursoUsuarios(List<CursoUsuario> cursoUsuarios) {
-		this.cursoUsuarios = cursoUsuarios;
 	}
 
 	public List<Usuario> getUsuarios() {
